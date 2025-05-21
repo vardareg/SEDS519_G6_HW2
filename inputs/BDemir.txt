@@ -1,0 +1,2 @@
+PHOT320; Monday; 09:45; D11
+PHOT222; Friday; 08:45; D4
