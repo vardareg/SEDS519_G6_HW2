@@ -26,7 +26,7 @@ public class SchedulerApp {
     private static final Path INPUT_DIR = Paths.get("inputs");
     private static final Path OUTPUT_DIR = Paths.get("output");
     private static final String BASE_HTML = "output.html";
-    
+
     public void run() {
         System.out.println("\033[33m--------------------------------------------------\033[0m");
 
@@ -78,9 +78,11 @@ public class SchedulerApp {
 
             DayOfWeek day = HtmlHelper.parseTurkishDay(dayStr);
             if (day == null) {
+
                 System.err.println("\033[31m" +
                         "WARNING: Invalid day '" + dayStr + "' in " + prefPath +
                         "\033[0m");
+
                 continue;
             }
             TimeSlot slot = new TimeSlot(day, timeStr);
