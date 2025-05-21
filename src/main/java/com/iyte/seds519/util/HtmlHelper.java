@@ -25,21 +25,24 @@ public class HtmlHelper {
     }
 
     /**
-     * Find the cell (<td>) matching the given slot in every table of the document.
+     * Find the cell (
+     * <td>) matching the given slot in every table of the document.
      * Returns the first match or null.
      */
     public static Element findCell(Document doc, TimeSlot slot) {
         Elements tables = doc.select("table");
         for (Element table : tables) {
             Element cell = findCellInTable(table, slot);
-            if (cell != null) return cell;
+            if (cell != null)
+                return cell;
         }
         return null;
     }
 
     private static Element findCellInTable(Element table, TimeSlot slot) {
         Elements rows = table.select("tr");
-        if (rows.isEmpty()) return null;
+        if (rows.isEmpty())
+            return null;
 
         // Header row
         Elements headers = rows.get(0).select("th");
@@ -50,12 +53,14 @@ public class HtmlHelper {
                 break;
             }
         }
-        if (dayIdx == -1) return null;
+        if (dayIdx == -1)
+            return null;
 
         String expectedPrefix = slot.getTimeLabel();
         for (int r = 1; r < rows.size(); r++) {
             Element timeCell = rows.get(r).selectFirst("td");
-            if (timeCell == null) continue;
+            if (timeCell == null)
+                continue;
             if (timeCell.text().startsWith(expectedPrefix)) {
                 Elements cols = rows.get(r).select("td");
                 if (dayIdx < cols.size()) {
@@ -69,4 +74,22 @@ public class HtmlHelper {
     public static DayOfWeek parseTurkishDay(String dayTr) {
         return TR_DAY_MAP.getOrDefault(dayTr, null);
     }
+
+    public static String toTurkishDay(DayOfWeek day) {
+        switch (day) {
+            case MONDAY:
+                return "Pazartesi";
+            case TUESDAY:
+                return "Sali";
+            case WEDNESDAY:
+                return "Carsamba";
+            case THURSDAY:
+                return "Persembe";
+            case FRIDAY:
+                return "Cuma";
+            default:
+                return day.toString(); // fallback
+        }
+    }
+
 }

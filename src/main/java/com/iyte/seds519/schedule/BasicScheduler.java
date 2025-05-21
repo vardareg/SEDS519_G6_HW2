@@ -23,7 +23,8 @@ public class BasicScheduler implements Scheduler {
             // Get current occupant's info (plain text in cell)
             String occupant = cell.text();
             System.err.println("\033[31m" +
-                    "WARNING: Time slot already occupied for " + slot +
+                    "WARNING: Time slot already occupied for " + HtmlHelper.toTurkishDay(slot.getDay())
+                    +
                     " by " + occupant +
                     " : cannot schedule " + course + " " + lecture + " (" + instructor + ")" +
                     "\033[0m");

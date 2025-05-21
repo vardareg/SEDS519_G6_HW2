@@ -28,7 +28,7 @@ public class SchedulerApp {
     private static final String BASE_HTML = "output.html";
 
     public void run() {
-        System.out.println("\033[33m--------------------------------------------------\033[0m");
+        System.out.println("\033[33m--------------------------------------------------\033[0m"); //#TODO write a helper print
 
         try {
             if (Files.notExists(OUTPUT_DIR)) {
@@ -61,7 +61,6 @@ public class SchedulerApp {
     private void processPreferenceFile(Path prefPath, Scheduler scheduler, Document doc) throws IOException {
         List<String> lines = Files.readAllLines(prefPath);
         for (String line : lines) {
-
             String[] parts = line.split(";");
             if (parts.length != 4) {
                 System.err.println("\033[31m" +
@@ -78,7 +77,8 @@ public class SchedulerApp {
 
             DayOfWeek day = HtmlHelper.parseTurkishDay(dayStr);
             if (day == null) {
-
+                System.out.println();
+                System.out.println("\033[33m--------------------------------------------------\033[0m");
                 System.err.println("\033[31m" +
                         "WARNING: Invalid day '" + dayStr + "' in " + prefPath +
                         "\033[0m");
