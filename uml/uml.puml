@@ -1,0 +1,79 @@
+@startuml SEDSHW2G6
+
+' --- Packages ---
+package app {
+    class SchedulerApp
+}
+
+
+    class Main
+
+
+package factory {
+    class ScheduleFactory
+    enum ScheduleType
+}
+
+package schedule {
+    interface Scheduler
+    class BasicScheduler
+}
+
+package model {
+    class TimeSlot
+}
+
+package strategy {
+    interface TimeSelectionStrategy
+    class SimpleAvailabilityStrategy
+}
+
+package decorator {
+    abstract class SchedulerDecorator
+    class LoggingDecorator
+    class ValidationDecorator
+}
+
+package util {
+    class HtmlHelper
+}
+
+' --- Main Flow ---
+Main --> SchedulerApp : calls run()
+
+' --- Factory Pattern ---
+SchedulerApp ..> ScheduleFactory : uses
+ScheduleFactory --> Scheduler : creates
+ScheduleFactory --> ScheduleType
+
+' --- Strategy Pattern ---
+BasicScheduler ..> TimeSelectionStrategy : uses
+SimpleAvailabilityStrategy ..|> TimeSelectionStrategy
+
+' --- Scheduler interface ---
+BasicScheduler ..|> Scheduler
+SchedulerDecorator ..|> Scheduler
+LoggingDecorator --|> SchedulerDecorator
+ValidationDecorator --|> SchedulerDecorator
+
+' --- Decorator Pattern ---
+SchedulerDecorator o-- Scheduler : delegate
+
+' --- SchedulerApp relations ---
+SchedulerApp ..> Scheduler : uses
+SchedulerApp ..> HtmlHelper : uses
+SchedulerApp ..> TimeSlot
+
+' --- Helper and Model ---
+HtmlHelper ..> TimeSlot
+
+' --- Schedule logic ---
+BasicScheduler ..> HtmlHelper : uses
+ValidationDecorator ..> HtmlHelper : uses
+LoggingDecorator ..> HtmlHelper : uses
+
+' --- Data relationships ---
+TimeSlot o-- "1" DayOfWeek : day
+TimeSlot o-- "1" String : timeLabel
+
+@enduml
