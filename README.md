@@ -1,4 +1,4 @@
-# SEDS519\_G6\_HW2 – Weekly Course Schedule Generator
+# Weekly Course Schedule Generator
 
 This Java application generates a **weekly university course schedule** by reading an HTML template and multiple lecturer preference files, filling courses into their preferred time slots, and saving the updated schedule as HTML.
 
